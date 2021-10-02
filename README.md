@@ -1,6 +1,11 @@
 # Dseized Bot
 
 
+[![Discord](https://img.shields.io/discord/735831202799419454?label=DISCORD&logo=discord&style=for-the-badge)](https://discord.gg/vEDB8JDZED)
+[![Python version](https://img.shields.io/badge/Python-3.8-pink?style=for-the-badge&logo=python)](https://python.org)
+
+
+
 This repository contains all of the code required **NOTE** you may need to download other dependencies which will be mentioned below. This bot has many features such as playing songs in multiple servers and making a queue for songs. [Discord.py](https://pypi.org/project/discord.py/)
 
 
