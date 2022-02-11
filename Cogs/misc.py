@@ -4,6 +4,7 @@ import os
 import shutil
 from os import system
 
+
 from discord.utils import get
 import time
 from discord.ext.commands import check
@@ -16,15 +17,63 @@ class misc(commands.Cog):
     @commands.command()
     async def info(self, ctx):
         #await ctx.send(f'My ping is {round(self.latency*1000, 2)} ms!')
-        await ctx.send(
-            '`-play\n-pause\n-resume\n-skip\n-stop\n-queue\n-userinfo\n-as anime\n-ms manga\n-invite`'
-        )
+        await ctx.send(f'`-play\n-pause\n-resume\n-skip\n-stop\n-queue\n-userinfo\n-as anime\n-ms manga\n-invite`')
 
     @commands.command()
     async def invite(self, ctx):
-        await ctx.send(
-            'https://discord.com/api/oauth2/authorize?client_id=893777032423571457&permissions=0&scope=bot'
-        )
+        await ctx.send(f'https://discord.com/api/oauth2/authorize?client_id=893777032423571457&permissions=0&scope=bot')
+
+    @commands.command()
+    async def sh(self, ctx):
+        await ctx.channel.purge(limit=1)
+        await ctx.send(f'sheeeeeeeesh :cold_face:')
+
+
+    @commands.command()
+    async def amogus(self, ctx):
+        await ctx.channel.purge(limit=1)
+        await ctx.send(f'https://tenor.com/view/boiled-soundcloud-boiled-boiled-irl-boiled-utsc-boiled-cheesestick-agem-soundcloud-gif-20049996')
+
+
+    @commands.command()
+    async def cat(self, ctx):
+        await ctx.channel.purge(limit=1)
+        await ctx.send(f'https://tenor.com/view/cat-cute-cat-cat-cute-cats-adorable-gif-17561910')
+
+
+    @commands.command()
+    async def shutup(self, ctx):
+        await ctx.channel.purge(limit=1)
+        await ctx.send(f'https://tenor.com/view/eren-yaeger-shut-up-eren-aot-attack-on-titan-gif-24299359')
+
+
+    @commands.command()
+    async def hi(self, ctx):
+        await ctx.channel.purge(limit=1)
+        await ctx.send(f'Hello')
+
+    #@client.command()
+    @commands.command(aliases = ['jdh'])
+    async def jadisconnectho(self, ctx : commands.Context, user : discord.Member = None):
+        if user==None:
+            user=ctx.author
+        member = ctx.author if not user else user
+        if user.voice is None:
+            await ctx.send("Andha saala")
+        elif ctx.author.voice is None:
+            await ctx.send("Tor baap ke emon kyalabo na shuor er bachha")
+        else:
+            roles = [role for role in member.roles]
+            embed = discord.Embed(colour=member.colour, timestamp=ctx.message.created_at)
+            embed.set_author(name=f"Gracefully Disconnected : {member}")
+            embed.set_thumbnail(url=member.avatar_url)
+            embed.set_footer(text=f"Deemed Undeserving By {ctx.author}", icon_url=ctx.author.avatar_url)
+            embed.add_field(name="Undeserving Idiot :", value=member.display_name, inline="False")
+            embed.add_field(name="Disgracing the Role :", value=member.top_role.mention, inline="False")
+            embed.add_field(name="Unimportant user:", value=member, inline="False")
+            await ctx.send(embed=embed)
+            await user.move_to(None)
+    
 
     @commands.command()
     async def userinfo(self, ctx, member: discord.Member = None):
@@ -38,12 +87,7 @@ class misc(commands.Cog):
         embed.add_field(name="Nickname:", value=member.display_name, inline="False")
         embed.add_field(name="Created On:", value=member.created_at.strftime("%a, %d, %B, %Y, %I:%M %p UTC"), inline="False")
         embed.add_field(name="Joined On:", value=member.joined_at.strftime("%a, %d, %B, %Y, %I:%M %p UTC"), inline="False")
-        embed.add_field(
-            name=f"Roles ({len(roles)})",
-            value=" ".join(role.mention for role in roles),
-            inline="False",
-        )
-
+        embed.add_field(name=f"Roles ({len(roles)})", value=" ".join([role.mention for role in roles]), inline="False")
         embed.add_field(name="Highest Role:", value=member.top_role.mention, inline="False")
         embed.add_field(name="Bot:", value=member.bot, inline="False")
         await ctx.send(embed=embed)
@@ -54,7 +98,7 @@ class misc(commands.Cog):
         await ctx.channel.purge(limit=amount+1)
 
     @commands.command(aliases = ['as'])
-    async def animesearch(self, ctx, an: str, ):
+    async def animesearch(self, ctx, *, an: str, ):
         start = time.time()
         search = AnimeSearch(f"{an}") # Search for "cowboy bebop"
         id_ = search.results[0].mal_id
@@ -87,7 +131,7 @@ class misc(commands.Cog):
         await ctx.send(f"`Time taken: {round(end-start, 2)} seconds`")
 
     @commands.command(aliases = ['ms'])
-    async def mangasearch(self, ctx, an: str, ):
+    async def mangasearch(self, ctx, *, an: str, ):
         start = time.time()
         search = MangaSearch(f"{an}") # Search for "cowboy bebop"
         id_ = search.results[0].mal_id
@@ -131,7 +175,6 @@ class misc(commands.Cog):
         await ctx.channel.purge(limit=1)
         await channel.send(f"{say}")
 
-    
 
 
 def setup(client):

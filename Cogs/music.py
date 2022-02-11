@@ -242,16 +242,19 @@ class Music(commands.Cog):
 
         vc = ctx.voice_client
 
-        if not vc:
+        if ctx.author.voice is None:
+            await ctx.send("You are not connected to a voice channel")
+
+        else:
             await ctx.invoke(self.connect_)
 
-        player = self.get_player(ctx)
+            player = self.get_player(ctx)
 
-        # If download is False, source will be a dict which will be used later to regather the stream.
-        # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
-        source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
+            # If download is False, source will be a dict which will be used later to regather the stream.
+            # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
+            source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
 
-        await player.queue.put(source)
+            await player.queue.put(source)
 
     @commands.command(name='pause')
     async def pause_(self, ctx):
@@ -360,7 +363,7 @@ class Music(commands.Cog):
         player.volume = vol / 100
         await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
 
-    @commands.command(name='stop', aliases=['leave'])
+    @commands.command(name='disconnect', aliases=['leave'])
     async def stop_(self, ctx):
         """Stop the currently playing song and destroy the player.
         !Warning!
