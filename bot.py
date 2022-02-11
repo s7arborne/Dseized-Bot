@@ -18,6 +18,7 @@ from discord.ext.commands import check
 TokenFile = open("./data/Token.txt", "r") # Make sure to paste the token in the txt file
 TOKEN = TokenFile.read() 
 
+#Get the API keys from the developer.discord.com 
 OWNERID = 254324351296339968
 
 # Define "bot"
@@ -26,7 +27,7 @@ status = ['-play', 'Singing']
 # Let us Know when the bot is ready and has started
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with the homies | -info"))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with 3 big balls | -info"))
     print("Bot is ready")
 
 
@@ -52,52 +53,50 @@ async def move(ctx, *, channel : discord.VoiceChannel):
         await members.move_to(channel)
 
 # A simple and small ERROR handler
-@bot.event
+@bot.event 
 async def on_command_error(ctx,error):
     embed = discord.Embed(
     title='',
     color=discord.Color.red())
+    if isinstance(error, commands.CommandNotFound):
+        pass
     if isinstance(error, commands.MissingPermissions):
-        embed.add_field(
-            name='Invalid Permissions',
-            value=f'You dont have {error.missing_perms} permissions.',
-        )
-
+        embed.add_field(name=f'Invalid Permissions', value=f'You dont have {error.missing_perms} permissions.')
         await ctx.send(embed=embed)
     else:
-        embed.add_field(name=':x: Terminal Error', value = f"```{error}```")
+        embed.add_field(name = f':x: Terminal Error', value = f"```{error}```")
         await ctx.send(embed = embed)
         raise error
 
 # Load command to manage our "Cogs" or extensions
 @bot.command()
 async def load(ctx, extension):
-    # Check if the user running the command is actually the owner of the bot
+    # Check if the user running the command is actually the owner of the bot 
     if ctx.author.id == OWNERID:
         bot.load_extension(f'Cogs.{extension}')
-        await ctx.send('Enabled the Cog!')
+        await ctx.send(f"Enabled the Cog!")
     else:
-        await ctx.send('You are not cool enough to use this command')
+        await ctx.send(f"You are not cool enough to use this command")
 
 # Unload command to manage our "Cogs" or extensions
 @bot.command()
 async def unload(ctx, extension):
-    # Check if the user running the command is actually the owner of the bot
+    # Check if the user running the command is actually the owner of the bot 
     if ctx.author.id == OWNERID:
         bot.unload_extension(f'Cogs.{extension}')
-        await ctx.send('Disabled the Cog!')
+        await ctx.send(f"Disabled the Cog!")
     else:
-        await ctx.send('You are not cool enough to use this command')
+        await ctx.send(f"You are not cool enough to use this command")
 
 # Reload command to manage our "Cogs" or extensions
 @bot.command(name = "reload")
 async def reload_(ctx, extension):
-    # Check if the user running the command is actually the owner of the bot
+    # Check if the user running the command is actually the owner of the bot 
     if ctx.author.id == OWNERID:
         bot.reload_extension(f'Cogs.{extension}')
-        await ctx.send('Reloaded the Cog!')
+        await ctx.send(f"Reloaded the Cog!") 
     else:
-        await ctx.send('You are not cool enough to use this command')
+        await ctx.send(f"You are not cool enough to use this command")
 
 # Automatically load all the .py files in the Cogs folder
 for filename in os.listdir('./Cogs'):
