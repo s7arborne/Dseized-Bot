@@ -236,7 +236,7 @@ class Music(commands.Cog):
 
         await ctx.send(f'Connected to: **{channel}**', )
 
-    @commands.command(name='play', aliases=['sing'])
+    @commands.command(name='play', aliases=['p'])
     async def play_(self, ctx, *, search: str):
         await ctx.trigger_typing()
 
@@ -255,6 +255,28 @@ class Music(commands.Cog):
             source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
 
             await player.queue.put(source)
+
+
+    # @commands.command(name='sus', aliases=['sussy'])
+    # async def play_(self, ctx):
+    #     await ctx.trigger_typing()
+
+    #     vc = ctx.voice_client
+
+    #     if ctx.author.voice is None:
+    #         await ctx.send("You are not connected to a voice channel")
+
+    #     else:
+    #         await ctx.invoke(self.connect_)
+
+    #         player = self.get_player(ctx)
+
+    #         # If download is False, source will be a dict which will be used later to regather the stream.
+    #         # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
+    #         source = await YTDLSource.create_source(ctx, "https://youtu.be/grd-K33tOSM", loop=self.bot.loop, download=False)
+
+    #         await player.queue.put(source)
+
 
     @commands.command(name='pause')
     async def pause_(self, ctx):

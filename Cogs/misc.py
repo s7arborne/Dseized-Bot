@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 import shutil
 from os import system
+import requests
 
 
 from discord.utils import get
@@ -28,6 +29,11 @@ class misc(commands.Cog):
         await ctx.channel.purge(limit=1)
         await ctx.send(f'sheeeeeeeesh :cold_face:')
 
+    @commands.command()
+    async def say(self, ctx, *, say: str, ):
+        await ctx.channel.purge(limit=1)
+        print(f"say: {say}")
+
 
     @commands.command()
     async def amogus(self, ctx):
@@ -42,11 +48,27 @@ class misc(commands.Cog):
 
 
     @commands.command()
+    async def say(self, ctx,* , sy: str):
+        await ctx.channel.purge(limit=1)
+        await ctx.send(sy)
+
+
+    @commands.command()
     async def shutup(self, ctx):
         await ctx.channel.purge(limit=1)
         await ctx.send(f'https://tenor.com/view/eren-yaeger-shut-up-eren-aot-attack-on-titan-gif-24299359')
 
-
+    @commands.command()
+    async def rumble(ctx):
+        #guild = ctx.guild
+        #voice_client: discord.VoiceClient = discord.utils.get(commands.voice_clients, guild=guild)
+        #audio_source = discord.FFmpegPCMAudio('rumbling.mp3')
+        vc = await ctx.author.channel.connect()
+        #if not voice_client.is_playing():
+            # voice_client.play(audio_source, after=None)
+        vc.play(discord.FFmpegPCMAudio(executable="ffmpeg.exe", source="rumbling.mp3"))
+        
+    
     @commands.command()
     async def hi(self, ctx):
         await ctx.channel.purge(limit=1)
@@ -91,6 +113,16 @@ class misc(commands.Cog):
         embed.add_field(name="Highest Role:", value=member.top_role.mention, inline="False")
         embed.add_field(name="Bot:", value=member.bot, inline="False")
         await ctx.send(embed=embed)
+
+    @commands.command()
+    async def chhatu(self, ctx, member: discord.Member = None):
+        member = ctx.author if not member else member
+        embed = discord.Embed(colour=member.colour, timestamp=ctx.message.created_at)
+        embed.set_thumbnail(url="https://i.imgur.com/iq61BBZ.png")
+        embed.add_field(name="No", value="Bitches?", inline="False")
+        await ctx.send(embed=embed)
+
+
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -169,11 +201,11 @@ class misc(commands.Cog):
     
 
 
-    @commands.command()
-    async def say(self, ctx, say: str, id: int):
-        channel = self.bot.get_channel(id)
-        await ctx.channel.purge(limit=1)
-        await channel.send(f"{say}")
+    # @commands.command()
+    # async def say(self, ctx, say: str, id: int):
+    #     channel = self.bot.get_channel(id)
+    #     await ctx.channel.purge(limit=1)
+    #     await channel.send(f"{say}")
 
 
 
